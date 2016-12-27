@@ -2,6 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var authMod = require('./index');
+var config  = require('./config');
 
 mongoose.connect('mongodb://localhost/tokenAuth');
 mongoose.Promise = global.Promise;
@@ -12,6 +13,7 @@ db.once('open', function() {
 });
 
 var app = express();
+app.set("secret",config.secret);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

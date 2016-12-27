@@ -6,6 +6,5 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('User', new Schema({
     email: {type: mongoose.SchemaTypes.Email, required: true,index: { unique: true }},
     password: {type: String, required: true},
-    verified: Boolean,
-    admin: Boolean
+    verified: Boolean
 }));

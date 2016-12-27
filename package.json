@@ -1,0 +1,25 @@
+{
+  "name": "express-token-auth",
+  "version": "0.0.1",
+  "description": "Express and mongoose token authentication library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georoot/express-token-auth.git"
+  },
+  "keywords": [
+    "express",
+    "mongoose",
+    "token",
+    "auth"
+  ],
+  "author": "Rahul Bhola <rb1223334444@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/georoot/express-token-auth/issues"
+  },
+  "homepage": "https://github.com/georoot/express-token-auth#readme"
+}

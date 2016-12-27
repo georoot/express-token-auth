@@ -1,8 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 var authMod = require('./index');
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/tokenAuth');
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -12,9 +13,8 @@ db.once('open', function() {
 
 var app = express();
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use("/auth",authMod);
 

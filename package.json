@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/georoot/express-token-auth#readme",
   "dependencies": {
+    "bcrypt": "^1.0.1",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.2.1",

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('./models/user');
 var jwt  = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // Login route
 router.post("/authenticate",function(req,res,next){
@@ -32,8 +34,14 @@ router.post("/authenticate",function(req,res,next){
 // Signup route
 router.post("/",function(req,res,next){
   req.body.verified = false;
-  new User(req.body)
-    .save()
+  bcrypt.hash(req.body.password, saltRounds)
+    .then(function(hash){
+      req.body.password = hash;
+    })
+    .then(function(){
+      return new User(req.body)
+      .save();
+    })
     .then(function(){
       res
         .status(200)

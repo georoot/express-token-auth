@@ -17,8 +17,11 @@ router.post("/authenticate",function(req,res,next){
       return user;
     })
     .then(function(user){
-      if(user.password != req.body.password)
+      if(!bcrypt.compareSync(req.body.password, user.password))
         throw new Error("Invalid username or password");
+      return user;
+    })
+    .then(function(user){
       return jwt.sign(user,req.app.get("secret"),{ expiresIn: '1h' });
     })
     .then(function(token){
@@ -53,8 +56,8 @@ router.post("/",function(req,res,next){
     })
 });
 
+// FIXME : remember to remove from production release
 router.get("/authenticate",function(req,res,next){
-  console.log(req.app.get("secret"));
   User
     .find({})
     .then(function(users){

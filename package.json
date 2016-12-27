@@ -1,10 +1,10 @@
 {
-  "name": "express-token-auth",
+  "name": "turall",
   "version": "0.0.1",
   "description": "Express and mongoose token authentication library",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -3,7 +3,6 @@ var router = express.Router();
 var User = require('./models/user');
 var jwt  = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
-var middleware = require('./middleware');
 const saltRounds = 10;
 
 // Login route
@@ -57,9 +56,38 @@ router.post("/",function(req,res,next){
     })
 });
 
-// FIXME : remember to remove from production release
-router.get("/authenticate",middleware.protect,function(req,res,next){
-  res.json(req.user)
-});
+module.exports.routes = router;
 
-module.exports = router;
+
+
+// Code for middleware
+
+module.exports.authMiddleware = function(req,res,next){
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  req.user = {};
+  if(token){
+    jwt
+      .verify(token,req.app.get("secret"),function(err,decoded){
+        if(err){
+          req.user.isAuthenticated = false;
+          next();
+        }else{
+          req.user = decoded;
+          req.user.isAuthenticated = true;
+          next();
+        }
+      });
+  }else{
+    req.user.isAuthenticated = false;
+    next();
+  }
+}
+
+module.exports.protect = function(req,res,next){
+  if(!req.user.isAuthenticated){
+    res.status(403);
+    res.json({error:"Authentication required"});
+  }else{
+    next();
+  }
+}

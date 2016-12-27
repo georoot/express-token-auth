@@ -2,6 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var authMod = require('./index');
+var middleware = require('./middleware');
 var config  = require('./config');
 
 mongoose.connect('mongodb://localhost/tokenAuth');
@@ -17,6 +18,7 @@ app.set("secret",config.secret);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(middleware.authMiddleware);
 
 app.use("/auth",authMod);
 

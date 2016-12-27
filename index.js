@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('./models/user');
 var jwt  = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
+var middleware = require('./middleware');
 const saltRounds = 10;
 
 // Login route
@@ -57,15 +58,8 @@ router.post("/",function(req,res,next){
 });
 
 // FIXME : remember to remove from production release
-router.get("/authenticate",function(req,res,next){
-  User
-    .find({})
-    .then(function(users){
-      res.json(users);
-    })
-    .catch(function(err){
-      res.json(err);
-    })
+router.get("/authenticate",middleware.protect,function(req,res,next){
+  res.json(req.user)
 });
 
 module.exports = router;
